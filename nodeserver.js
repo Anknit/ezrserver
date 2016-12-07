@@ -1,10 +1,17 @@
-var http = require('http');
-
-//Lets define a port we want to listen to
 const PORT = 8080;
+const firebaseKeyPath = "config/ezgarage-a71b7-firebase-adminsdk-ukbue-d42780731d.json";
+const firebaseDbUrl = "https://ezgarage-a71b7.firebaseio.com";
+
+var http = require('http'),
+    util = require('util'),
+    firebaseApi = require('./firebaseApi'),
+    firebaseObj = new firebaseApi(firebaseKeyPath, firebaseDbUrl);
 
 //We need a function which handles requests and send response
 function handleRequest(request, response) {
+    if(request.url == '/createUserEntry') {
+        firebaseObj.DB_Insert('development/nodeapi/users',{"name":"ankit"});
+    }
     response.end('It Works!! Path Hit: ' + request.url);
 }
 
