@@ -1,0 +1,14 @@
+{
+  "name": "ezrserver",
+  "version": "0.0.1",
+  "description": "",
+  "main": "nodeserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ankit Agarwal",
+  "license": "MIT",
+  "dependencies": {
+    "firebase-admin": "^4.0.4"
+  }
+}
