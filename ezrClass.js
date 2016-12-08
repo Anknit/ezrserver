@@ -12,7 +12,7 @@ class ezrClass {
         this.environment = env || 'TESTING';
     }
     setDefaultVehicleCategories(success, failure) {
-        var path = this.environment + '/' + this.version + '/vehicleCategories/';
+        var path = this.environment + '/' + this.version + '/vehicles/';
         var data = vehicleCategories;
         firebaseObj.DB_Insert(path, data, function (error) {
             if(error) {

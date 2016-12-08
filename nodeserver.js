@@ -6,60 +6,44 @@ const DB_VERSION = 'v1';
 const ENVIRONMENT = 'DEVELOPMENT';
 
 
-var http = require('http'),
-    util = require('util'),
+var util = require('util'),
     querystring = require('querystring'),
+    httpClass = require('./httpClass'),
     ezrClass = require('./ezrClass');
 
 //We need a function which handles requests and send response
-function handleRequest(req, res) {
+function httpReqHandler(req, res) {
     switch (req.method) {
     case 'GET':
         switch (req.url) {
         case '/':
-            res.writeHead(501, "Not implemented", {
-                'Content-Type': 'text/html'
-            });
-            res.end('<html><head><title>501 - Not implemented</title></head><body><h1>Not implemented!</h1></body></html>');
+            httpObj.notImplemented(req, res);
             break;
         case '/createVehicleCategories':
-            var ezrObj = new ezrClass(ENVIRONMENT, DB_VERSION);
-                ezrObj.setDefaultVehicleCategories(function(){
-                    res.writeHead(200, "OK", {
-                        'Content-Type': 'text/html'
-                    });
-                    res.end('<html><head><title>Test Page</title></head><body><h1>Success</h1></body></html>');
-                }, function(error){
-                    res.writeHead(200, "OK", {
-                        'Content-Type': 'text/html'
-                    });
-                    res.end('<html><head><title>Test Page</title></head><body><h1>Failed to set default categories</h1></body></html>');
-                });
+            ezrObj.setDefaultVehicleCategories(function(){
+                httpObj.okStatus(req, res, 'status');
+            }, function(error){
+                httpObj.okStatus(req, res, 'Failure');
+            });
             break;
         default:
-            res.writeHead(404, "Not found", {
-                'Content-Type': 'text/html'
-            });
-            res.end('<html><head><title>404 - Not found</title></head><body><h1>Not found.</h1></body></html>');
+            httpObj.notFound(req, res);
             break;
         }
         break;
     case 'POST':
+        httpObj.notImplemented(req, res);
         break;
     case 'DELETE':
+        httpObj.notImplemented(req, res);
         break;
     case 'PUT':
+        httpObj.notImplemented(req, res);
         break;
     default:
         break;
     }
 }
 
-//Create a server
-var server = http.createServer(handleRequest);
-
-//Lets start our server
-server.listen(PORT, function () {
-    //Callback triggered when server is successfully listening. Hurray!
-    console.log("Server listening on: http://localhost:%s", PORT);
-});
+var httpObj = new httpClass(PORT, httpReqHandler);
+var ezrObj = new ezrClass(ENVIRONMENT, DB_VERSION);
