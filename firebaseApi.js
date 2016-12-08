@@ -21,9 +21,13 @@ function firebaseApi(privateKeyPath, databaseURL) {
     this.databaseObj = firebaseAdmin.database();
 };
 
-firebaseApi.prototype.DB_Insert = function (path, data, callback) {
+firebaseApi.prototype.DB_Append = function (path, data, callback) {
     var newDbEntry = this.databaseObj.ref(path).push();
     newDbEntry.set(data, callback);
+}
+
+firebaseApi.prototype.DB_Insert = function (path, data, callback) {
+    this.databaseObj.ref(path).set(data, callback);
 }
 
 firebaseApi.prototype.DB_Update = function (path, data, callback) {
@@ -32,6 +36,14 @@ firebaseApi.prototype.DB_Update = function (path, data, callback) {
 
 firebaseApi.prototype.DB_Read = function (path, callback) {
     this.databaseObj.ref(path).once("value", callback);
+}
+
+firebaseApi.prototype.DB_Watch = function (path, callback) {
+    this.databaseObj.ref(path).on("value", callback);
+}
+
+firebaseApi.prototype.DB_StopWatch = function (path, callback) {
+    this.databaseObj.ref(path).off("value", callback);
 }
 
 module.exports = firebaseApi;
