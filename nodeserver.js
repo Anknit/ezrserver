@@ -8,6 +8,7 @@ const ENVIRONMENT = 'DEVELOPMENT';
 
 var util = require('util'),
     querystring = require('querystring'),
+    url = require('url'),
     httpClass = require('./httpClass'),
     ezrClass = require('./ezrClass');
 
@@ -21,9 +22,18 @@ function httpReqHandler(req, res) {
             break;
         case '/createVehicleCategories':
             ezrObj.setDefaultVehicleCategories(function(){
-                httpObj.okStatus(req, res, 'status');
+                httpObj.okStatus(req, res, 'Success');
             }, function(error){
                 httpObj.okStatus(req, res, 'Failure');
+            });
+            break;
+        case '/auth/verifyToken':
+            var url_parts = url.parse(req.url, true);
+            var query = url_parts.query;
+            ezrObj.verifyLoginToken(query, function(response) {
+                httpObj.okStatus(req, res, JSON.stringify(response));
+            }, function (error){
+                
             });
             break;
         default:

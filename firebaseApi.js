@@ -19,7 +19,17 @@ function firebaseApi(privateKeyPath, databaseURL) {
         databaseURL: databaseURL
     });
     this.databaseObj = firebaseAdmin.database();
+    this.authObj = firebaseAdmin.auth();
 };
+
+firebaseApi.prototype.verifyAuthToken = function (idToken, success, failure) {
+    this.authObj.verifyIdToken(idToken).then(function(decodedToken) {
+        var uid = decodedToken.uid;
+        success(decodedToken);
+    }).catch(function(error) {
+        failure(error);
+    });
+}
 
 firebaseApi.prototype.DB_Append = function (path, data, callback) {
     var newDbEntry = this.databaseObj.ref(path).push();

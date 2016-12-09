@@ -10,9 +10,10 @@ class ezrClass {
     constructor(env, version) {
         this.version = version || 'v1';
         this.environment = env || 'TESTING';
+        this.dbRoot = this.environment + '/' + this.version + '/';
     }
     setDefaultVehicleCategories(success, failure) {
-        var path = this.environment + '/' + this.version + '/vehicles/';
+        var path = this.dbRoot + 'vehicles/';
         var data = vehicleCategories;
         firebaseObj.DB_Insert(path, data, function (error) {
             if(error) {
@@ -21,6 +22,9 @@ class ezrClass {
                 success();
             }
         });
+    }
+    verifyLoginToken(token, success, failure) {
+        firebaseObj.verifyAuthToken(token, success, failure);
     }
 }
 

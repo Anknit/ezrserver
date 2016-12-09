@@ -1,1 +1,1 @@
-{"vehicleCategories": {"twoWheelers ":{"label ":"Two wheelers "},"cars ":{"label ":"Cars "},"others ":{"label ":"Others "}}, "vehicleType": {"twowheelers": {"activa": {"label": "Activa"}}, "cars": {"wagonr": {"label": "WagonR"}}, "others": {"truck": {"label":"Truck"}}}}
+{"vehicleCategories": {"twoWheelers":{"label":"Two wheelers"},"cars":{"label":"Cars"},"others":{"label":"Others"}}, "vehicleType": {"twowheelers": {"activa": {"label": "Activa"}}, "cars": {"wagonr": {"label": "WagonR"}}, "others": {"truck": {"label":"Truck"}}}}
